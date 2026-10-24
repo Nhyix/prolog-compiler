@@ -6,14 +6,14 @@
 ![Author](https://img.shields.io/badge/Author-Nhyix-8a2be2.svg?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/100%25-Offline_Resilient-success.svg?style=for-the-badge)
 ![Languages](https://img.shields.io/badge/Languages-Haskell_%7C_Scheme_%7C_Hope-informational.svg?style=for-the-badge)
-![Core](https://img.shields.io/badge/Core_ID-%23'NHYIX-ff69b4.svg?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.0.0--Pure-purple.svg?style=for-the-badge)
 
 <p align="center">
   <b>Un entorno de desarrollo integrado (IDE) profesional, moderno y 100% desconectado, diseñado específicamente para la programación funcional pura en Haskell, Scheme y Hope.</b>
 </p>
 
 <p align="center">
-  Desarrollado y Diseñado por <b>Nhyix</b> &bull; 
+  Desarrollado y Diseñado por <b>Nhyix</b>
 </p>
 
 </div>

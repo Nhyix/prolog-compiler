@@ -13,7 +13,7 @@
   <!-- Top Navigation Header -->
   <header>
     <div class="logo-area">
-      <div class="logo-icon" id="logo-icon-btn" title="TriFunc Studio — Creado por Nhyix (3 clics para Easter Egg)">λ</div>
+      <div class="logo-icon" id="logo-icon-btn" title="TriFunc Studio — Creado por Nhyix ">λ</div>
       <div class="logo-title-group">
         <span class="logo-title">TriFunc Studio</span>
         <span class="logo-subtitle">IDE Funcional <span class="logo-author-tag">by Nhyix</span></span>
@@ -251,6 +251,7 @@ qsort (x:xs) =
       <!-- Monaco Editor Holder -->
       <div class="editor-container">
         <div id="monaco-editor"></div>
+        <div id="editor-theme-ambient" class="editor-theme-ambient" style="display: none;"></div>
       </div>
 
       <!-- Resizer Splitter -->
@@ -351,7 +352,7 @@ qsort (x:xs) =
         <option value="scheme">Scheme (.scm)</option>
         <option value="haskell">Haskell (.hs)</option>
       </select>
-      <span id="sb-author-badge" class="status-item status-author-item" title="Autor & Arquitecto: Nhyix (Clic para Easter Egg #7620859)">
+      <span id="sb-author-badge" class="status-item status-author-item" title="Autor & Arquitecto: Nhyix ">
         <i class="fa-solid fa-fingerprint text-purple"></i> by Nhyix
       </span>
       <span id="sb-engine-status" class="status-item"><i class="fa-solid fa-circle-nodes text-green"></i> Motor Listo</span>
@@ -424,26 +425,49 @@ qsort (x:xs) =
     </div>
   </div>
 
-  <!-- Easter Egg Modal: Protocol 7620859 (Nhyix Core) -->
+  <!-- Secret Protocol 7620859 Modal & Anime Themes Unlocker -->
   <div id="modal-easter-egg" class="modal-overlay">
     <div class="modal-content modal-easter-egg">
       <div class="easter-egg-header">
-        <div class="easter-egg-title"><i class="fa-solid fa-terminal text-cyan"></i> PROTOCOLO 7620859 // ACCESO CONCEDIDO</div>
+        <div class="easter-egg-title"><i class="fa-solid fa-terminal text-cyan"></i> SISTEMA NHYIX // PROTOCOLO 7620859</div>
         <button id="btn-close-easter-egg" class="btn btn-sm"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="easter-egg-body">
-        <div class="easter-egg-cyber-badge"><i class="fa-solid fa-shield-halved"></i> NHYIX CORE ONLINE</div>
+        <div class="easter-egg-cyber-badge"><i class="fa-solid fa-unlock-keyhole"></i> 3 TEMAS EXCLUSIVOS DESBLOQUEADOS</div>
         <h2 class="easter-egg-code-display">7620859</h2>
-        <p class="easter-egg-quote">&ldquo;La computación funcional no es una técnica de programación, es una forma de pensamiento puro.&rdquo;</p>
-        <div class="easter-egg-spec-grid">
-          <div class="spec-item"><i class="fa-solid fa-fingerprint text-purple"></i> <span>Autor:</span> <strong>Nhyix</strong></div>
-          <div class="spec-item"><i class="fa-solid fa-shield-halved text-cyan"></i> <span>ID Secreto:</span> <strong>#7620859</strong></div>
-          <div class="spec-item"><i class="fa-solid fa-microchip text-green"></i> <span>Kernel:</span> <strong>TriFunc v2.0 Pure</strong></div>
-          <div class="spec-item"><i class="fa-solid fa-bolt text-amber"></i> <span>Estado:</span> <strong>100% Offline & Operativo</strong></div>
+        <p class="easter-egg-quote">&ldquo;El código puro trasciende los límites. Se han desbloqueado 3 temas legendarios en el selector de temas:&rdquo;</p>
+        
+        <div class="secret-theme-cards">
+          <div class="secret-theme-card theme-card-madoka" data-theme-apply="madoka">
+            <div class="st-icon">🌸</div>
+            <div class="st-info">
+              <strong>Mahou Shoujo Madoka Magica</strong>
+              <span>Soul Gem Pink · Deep Witch Violet · Despair Dark</span>
+            </div>
+            <button class="btn btn-sm btn-st-apply" data-theme-btn="madoka">Activar</button>
+          </div>
+
+          <div class="secret-theme-card theme-card-accel" data-theme-apply="accel-world">
+            <div class="st-icon">⚡</div>
+            <div class="st-info">
+              <strong>Accel World (Burst Link)</strong>
+              <span>Silver Crow Chrome · Hologram Cyan · Neural Green</span>
+            </div>
+            <button class="btn btn-sm btn-st-apply" data-theme-btn="accel-world">Activar</button>
+          </div>
+
+          <div class="secret-theme-card theme-card-ghoul" data-theme-apply="tokyo-ghoul">
+            <div class="st-icon">🩸</div>
+            <div class="st-info">
+              <strong>Tokyo Ghoul (Kakugan)</strong>
+              <span>Pitch Bone Black · Crimson Kagune · Ghoul Silver</span>
+            </div>
+            <button class="btn btn-sm btn-st-apply" data-theme-btn="tokyo-ghoul">Activar</button>
+          </div>
         </div>
       </div>
       <div class="modal-actions">
-        <button id="btn-confirm-easter-egg" class="btn btn-primary"><i class="fa-solid fa-check"></i> Reconocido</button>
+        <button id="btn-confirm-easter-egg" class="btn btn-primary"><i class="fa-solid fa-check"></i> Entendido</button>
       </div>
     </div>
   </div>

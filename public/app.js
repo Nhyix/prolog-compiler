@@ -111,6 +111,69 @@ require(['vs/editor/editor.main'], function () {
     }
   });
 
+  // Theme 1: Mahou Shoujo Madoka Magica
+  monaco.editor.defineTheme('madoka-theme', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'keyword', foreground: 'f755a5', fontStyle: 'bold' },
+      { token: 'keyword.equation', foreground: 'ffd56b', fontStyle: 'bold' },
+      { token: 'type', foreground: 'c084fc' },
+      { token: 'string', foreground: 'a8fbc5' },
+      { token: 'number', foreground: '98e4ff' },
+      { token: 'comment', foreground: '785675', fontStyle: 'italic' },
+      { token: 'operator', foreground: 'ff3366' }
+    ],
+    colors: {
+      'editor.background': '#180d1b',
+      'editor.foreground': '#ffd3ec',
+      'editorCursor.foreground': '#f755a5',
+      'editor.lineHighlightBackground': '#221226'
+    }
+  });
+
+  // Theme 2: Accel World (Burst Link)
+  monaco.editor.defineTheme('accel-world-theme', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'keyword', foreground: 'c56cf0', fontStyle: 'bold' },
+      { token: 'keyword.equation', foreground: '00f2fe', fontStyle: 'bold' },
+      { token: 'type', foreground: '38bdf8' },
+      { token: 'string', foreground: 'ffeaa7' },
+      { token: 'number', foreground: '00ff87' },
+      { token: 'comment', foreground: '486581', fontStyle: 'italic' },
+      { token: 'operator', foreground: 'ff3838' }
+    ],
+    colors: {
+      'editor.background': '#081119',
+      'editor.foreground': '#dcf5ff',
+      'editorCursor.foreground': '#00f2fe',
+      'editor.lineHighlightBackground': '#0d1b26'
+    }
+  });
+
+  // Theme 3: Tokyo Ghoul (Kakugan)
+  monaco.editor.defineTheme('tokyo-ghoul-theme', {
+    base: 'vs-dark',
+    inherit: true,
+    rules: [
+      { token: 'keyword', foreground: 'ff1744', fontStyle: 'bold' },
+      { token: 'keyword.equation', foreground: 'ff9100', fontStyle: 'bold' },
+      { token: 'type', foreground: 'b83b5e' },
+      { token: 'string', foreground: 'cfd8dc' },
+      { token: 'number', foreground: 'ff9100' },
+      { token: 'comment', foreground: '5c5357', fontStyle: 'italic' },
+      { token: 'operator', foreground: 'ff1744' }
+    ],
+    colors: {
+      'editor.background': '#0a0a0c',
+      'editor.foreground': '#f5f5f5',
+      'editorCursor.foreground': '#ff1744',
+      'editor.lineHighlightBackground': '#141418'
+    }
+  });
+
   // Create Editor instance
   editor = monaco.editor.create(document.getElementById('monaco-editor'), {
     theme: 'vs-dark',
@@ -149,6 +212,18 @@ async function initApp() {
   setupEventListeners();
   setupPanelResizer();
   loadSavedFontSettings();
+
+  // Check if secret themes were previously unlocked
+  if (localStorage.getItem('trifunc_secret_themes_unlocked') === 'true') {
+    unlockSecretThemes();
+  }
+
+  // Restore saved theme if any
+  const savedTheme = localStorage.getItem('trifunc_active_theme');
+  if (savedTheme) {
+    applyTheme(savedTheme);
+  }
+
   await loadFiles();
 
   // Open default main file
@@ -327,15 +402,138 @@ function setupEventListeners() {
     });
   }
 
-  // Theme switch
-  document.getElementById('theme-select').addEventListener('change', (e) => {
-    const theme = e.target.value;
+  // Encoded Vector Glyph Buffers (Disguised Internal Assets)
+  const _SYS_GFX_CACHE = {
+    madoka: {
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9InNtZyIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNTAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZmZmZmIi8+PHN0b3Agb2Zmc2V0PSIzMCUiIHN0b3AtY29sb3I9IiNmZjgwYmYiLz48c3RvcCBvZmZzZXQ9IjgwJSIgc3RvcC1jb2xvcj0iI2Y3NTVhNSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzNkMGMyNiIvPjwvcmFkaWFsR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik01MCA4IFE2NSAzMCA2NSA1OCBRNjUgODIgNTAgOTIgUTM1IDgyIDM1IDU4IFEzNSAzMCA1MCA4IFoiIGZpbGw9InVybCgjc21nKSIgc3Ryb2tlPSIjZmZkNTZiIiBzdHJva2Utd2lkdGg9IjMiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjU1IiByPSIxNCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4zIi8+PHBvbHlnb24gcG9pbnRzPSI1MCwxNSA1NCwyNiA2NSwyNiA1NiwzMyA1OSw0NCA1MCwzOCA0MSw0NCA0NCwzMyAzNSwyNiA0NiwyNiIgZmlsbD0iI2ZmZDU2YiIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iOTIiIHI9IjQiIGZpbGw9IiNmZmQ1NmIiLz48L3N2Zz4=',
+      amb: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9Im1jZyIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNTAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZjc1NWE1IiBzdG9wLW9wYWNpdHk9IjAuOCIvPjxzdG9wIG9mZnNldD0iNjAlIiBzdG9wLWNvbG9yPSIjYzA4NGZjIiBzdG9wLW9wYWNpdHk9IjAuNCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5MiIgc3Ryb2tlPSIjZjc1NWE1IiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiIHN0cm9rZS1kYXNoYXJyYXk9IjQsNiIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iODIiIHN0cm9rZT0iI2ZmZDU2YiIgc3Ryb2tlLXdpZHRoPSIxLjUiIGZpbGw9InVybCgjbWNnKSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iNjQiIHN0cm9rZT0iI2Y3NTVhNSIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PHBvbHlnb24gcG9pbnRzPSIxMDAsMzYgMTU1LDEzMiA0NSwxMzIiIHN0cm9rZT0iI2ZmZDU2YiIgc3Ryb2tlLXdpZHRoPSIyIiBmaWxsPSJub25lIi8+PHBvbHlnb24gcG9pbnRzPSIxMDAsMTY0IDE1NSw2OCA0NSw2OCIgc3Ryb2tlPSIjZmZkNTZiIiBzdHJva2Utd2lkdGg9IjIiIGZpbGw9Im5vbmUiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjI4IiBzdHJva2U9IiNmNzU1YTUiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iIzI0MTIyOCIgb3BhY2l0eT0iMC44Ii8+PHBhdGggZD0iTTEwMCA4MCBRMTEyIDEwMCAxMDAgMTIwIFE4OCAxMDAgMTAwIDgwIFoiIGZpbGw9IiNmNzU1YTUiLz48L3N2Zz4=',
+      btnText: 'Invocar',
+      btnIcon: 'fa-wand-magic-sparkles',
+      subTitle: 'Puella Magi Edition · Nhyix',
+      engineText: '<i class="fa-solid fa-gem text-pink"></i> Contrato Mágico: Activo',
+      tabOutput: '<i class="fa-solid fa-scroll"></i> <span>Pergamino Mágico</span>',
+      tabRepl: '<i class="fa-solid fa-star"></i> <span>Oráculo REPL</span>',
+      tabTrace: '<i class="fa-solid fa-infinity"></i> <span>Bucle Temporal</span>',
+      prompt: '✧ (madoka)> '
+    },
+    'accel-world': {
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImF3Z2wiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMwMGYyZmUiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzAwZmY4NyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1NmNmMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwb2x5Z29uIHBvaW50cz0iNTAsNiA4OCwyOCA4OCw3MiA1MCw5NCAxMiw3MiAxMiwyOCIgc3Ryb2tlPSJ1cmwoI2F3Z2wpIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9IiMwNDA5MGUiLz48cG9seWdvbiBwb2ludHM9IjUwLDE4IDc4LDM0IDc4LDY2IDUwLDgyIDIyLDY2IDIyLDM0IiBzdHJva2U9IiMwMGYyZmUiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjYiLz48cGF0aCBkPSJNNTAgMjQgTDI4IDQ4IEwzNiA2OCBMNTAgNTYgTDY0IDY4IEw3MiA0OCBaIiBmaWxsPSJ1cmwoI2F3Z2wpIi8+PHBvbHlsaW5lIHBvaW50cz0iMzIsNTIgNTAsMzYgNjgsNTIiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIyLjUiIGZpbGw9Im5vbmUiLz48L3N2Zz4=',
+      amb: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImF3YW1iIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMDBmMmZlIiBzdG9wLW9wYWNpdHk9IjAuOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2M1NmNmMCIgc3RvcC1vcGFjaXR5PSIwLjIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48ZyBzdHJva2U9IiMwMGYyZmUiIHN0cm9rZS13aWR0aD0iMS41IiBmaWxsPSJub25lIiBvcGFjaXR5PSIwLjYiPjxwb2x5Z29uIHBvaW50cz0iMTAwLDEwIDE3OCw1NSAxNzgsMTQ1IDEwMCwxOTAgMjIsMTQ1IDIyLDU1Ii8+PHBvbHlnb24gcG9pbnRzPSIxMDAsMzAgMTYwLDY1IDE2MCwxMzUgMTAwLDE3MCA0MCwxMzUgNDAsNjUiLz48bGluZSB4MT0iMTAwIiB5MT0iMTAiIHgyPSIxMDAiIHkyPSIxOTAiLz48bGluZSB4MT0iMjIiIHkxPSI1NSIgeDI9IjE3OCIgeTI9IjE0NSIvPjxsaW5lIHgxPSIyMiIgeTE9IjE0NSIgeDI9IjE3OCIgeTI9IjU1Ii8+PC9nPjxwYXRoIGQ9Ik0xMDAgNDUgTDUwIDk1IEw3MCAxNDUgTDEwMCAxMjAgTDEzMCAxNDUgTDE1MCA5NSBaIiBmaWxsPSJ1cmwoI2F3YW1iKSIvPjxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iMTgiIGZpbGw9IiMwMGZmODciIG9wYWNpdHk9IjAuNCIvPjx0ZXh0IHg9IjEwMCIgeT0iMTYwIiBmb250LWZhbWlseT0ibW9ub3NwYWNlIiBmb250LXNpemU9IjEwIiBmaWxsPSIjMDBmMmZlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBsZXR0ZXItc3BhY2luZz0iMyIgZm9udC13ZWlnaHQ9ImJvbGQiPkJVUlNUIExJTks8L3RleHQ+PC9zdmc+',
+      btnText: 'Burst Link',
+      btnIcon: 'fa-bolt-lightning',
+      subTitle: 'Burst Link OS · Nhyix',
+      engineText: '<i class="fa-solid fa-gauge-high text-cyan"></i> Aceleración: 1000x',
+      tabOutput: '<i class="fa-solid fa-display"></i> <span>HUD Neural</span>',
+      tabRepl: '<i class="fa-solid fa-network-wired"></i> <span>Enlace Directo</span>',
+      tabTrace: '<i class="fa-solid fa-forward-fast"></i> <span>Traza Acelerada</span>',
+      prompt: '⚡ [burst-link]> '
+    },
+    'tokyo-ghoul': {
+      logo: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9InRnZXllIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48c3RvcCBvZmZzZXQ9IjM1JSIgc3RvcC1jb2xvcj0iI2ZmMTc0NCIvPjxzdG9wIG9mZnNldD0iNzUlIiBzdG9wLWNvbG9yPSIjYjgwMDFmIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMGEwYTBjIi8+PC9yYWRpYWxHcmFkaWVudD48L2RlZnM+PGVsbGlwc2UgY3g9IjUwIiBjeT0iNTAiIHJ4PSI0NiIgcnk9IjM0IiBmaWxsPSIjMGEwYTBjIiBzdHJva2U9IiNmZjE3NDQiIHN0cm9rZS13aWR0aD0iMyIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjIyIiBmaWxsPSJ1cmwoI3RnZXllKSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjgiIGZpbGw9IiMwMDAwMDAiLz48cGF0aCBkPSJNNTAgMjggTDUwIDE0IE01MCA3MiBMNTAgODYgTTI4IDUwIEwxNCA1MCBNNzIgNTAgTDg2IDUwIE0zNCAzNCBMMjIgMjIgTTY2IDY2IEw3OCA3OCBNMzQgNjYgTDIyIDc4IE02NiAzNCBMNzggMjIiIHN0cm9rZT0iI2ZmMTc0NCIgc3Ryb2tlLXdpZHRoPSIyLjUiLz48cGF0aCBkPSJNNTAgMjggUTQyIDQwIDUwIDUwIFE1OCA2MCA1MCA3MiIgc3Ryb2tlPSIjZmZmZmZmIiBzdHJva2Utd2lkdGg9IjEuMiIgZmlsbD0ibm9uZSIgb3BhY2l0eT0iMC42Ii8+PC9zdmc+',
+      amb: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImtnZ3JhZCIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmMTc0NCIgc3RvcC1vcGFjaXR5PSIwLjkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0YTAwMGQiIHN0b3Atb3BhY2l0eT0iMC4xIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PGcgc3Ryb2tlPSIjZmYxNzQ0IiBmaWxsPSJub25lIiBzdHJva2Utd2lkdGg9IjIiIG9wYWNpdHk9IjAuNyI+PHBhdGggZD0iTTIwIDE4MCBRNjAgMTIwIDEwMCAxMDAgUTE0MCA4MCAxODAgMjAiIHN0cm9rZS13aWR0aD0iNCIvPjxwYXRoIGQ9Ik0yMCAxODAgUTgwIDE2MCAxMDAgMTAwIFExMjAgNDAgMTgwIDIwIiBzdHJva2Utd2lkdGg9IjIuNSIvPjxwYXRoIGQ9Ik0xODAgMTgwIFExNDAgMTIwIDEwMCAxMDAgUTYwIDgwIDIwIDIwIiBzdHJva2Utd2lkdGg9IjQiLz48cGF0aCBkPSJNMTgwIDE4MCBRMTIwIDE2MCAxMDAgMTAwIFE4MCA0MCAyMCAyMCIgc3Ryb2tlLXdpZHRoPSIyLjUiLz48L2c+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI0MiIgZmlsbD0iIzA2MDYwOCIgc3Ryb2tlPSIjZmYxNzQ0IiBzdHJva2Utd2lkdGg9IjMiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjI0IiBmaWxsPSJ1cmwoI2tnZ3JhZCkiLz48Y2lyY2xlIGN4PSIxMDAiIGN5PSIxMDAiIHI9IjkiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCB4PSIxMDAiIHk9IjE2NSIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIxMCIgZmlsbD0iI2ZmMTc0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9IjQiIGZvbnQtd2VpZ2h0PSJib2xkIj5LQUtVR0FOIC8vIFJDIDM4NTA8L3RleHQ+PC9zdmc+',
+      btnText: 'Devorar',
+      btnIcon: 'fa-eye',
+      subTitle: 'Anteiku Terminal · Nhyix',
+      engineText: '<i class="fa-solid fa-skull text-red"></i> Células RC: 3,850',
+      tabOutput: '<i class="fa-solid fa-book-skull"></i> <span>Reporte CCG</span>',
+      tabRepl: '<i class="fa-solid fa-eye"></i> <span>Diálogo Ghoul</span>',
+      tabTrace: '<i class="fa-solid fa-dna"></i> <span>Evolución RC</span>',
+      prompt: '🩸 [anteiku]> '
+    }
+  };
+
+  // Dynamic Theme Switcher with Anime Editions Support
+  function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     if (theme === 'dark') monaco.editor.setTheme('vs-dark');
     else if (theme === 'light') monaco.editor.setTheme('vs');
     else if (theme === 'synthwave') monaco.editor.setTheme('synthwave-theme');
     else if (theme === 'monokai') monaco.editor.setTheme('monokai-theme');
     else if (theme === 'github-dark') monaco.editor.setTheme('github-dark-theme');
+    else if (theme === 'madoka') monaco.editor.setTheme('madoka-theme');
+    else if (theme === 'accel-world') monaco.editor.setTheme('accel-world-theme');
+    else if (theme === 'tokyo-ghoul') monaco.editor.setTheme('tokyo-ghoul-theme');
+
+    const pack = _SYS_GFX_CACHE[theme];
+    const logoEl = document.getElementById('logo-icon-btn');
+    const subTitleEl = document.querySelector('.logo-subtitle');
+    const btnRun = document.getElementById('btn-run');
+    const engineStatus = document.getElementById('sb-engine-status');
+    const tabOut = document.getElementById('ptab-output');
+    const tabRepl = document.getElementById('ptab-repl');
+    const tabTrace = document.getElementById('ptab-trace');
+    const replPrompt = document.getElementById('repl-prompt');
+    const ambientEl = document.getElementById('editor-theme-ambient');
+
+    if (pack) {
+      if (logoEl) logoEl.innerHTML = `<img src="${pack.logo}" class="logo-theme-img" alt="logo" />`;
+      if (subTitleEl) subTitleEl.innerHTML = `${pack.subTitle} <span class="logo-author-tag">by Nhyix</span>`;
+      if (btnRun) btnRun.innerHTML = `<i class="fa-solid ${pack.btnIcon}"></i> <span>${pack.btnText}</span>`;
+      if (engineStatus) engineStatus.innerHTML = pack.engineText;
+      if (tabOut) tabOut.innerHTML = pack.tabOutput;
+      if (tabRepl) tabRepl.innerHTML = pack.tabRepl;
+      if (tabTrace) tabTrace.innerHTML = pack.tabTrace;
+      if (replPrompt) replPrompt.textContent = pack.prompt;
+      if (ambientEl) {
+        ambientEl.style.display = 'block';
+        ambientEl.style.backgroundImage = `url("${pack.amb}")`;
+      }
+    } else {
+      // Revert to standard IDE layout
+      if (logoEl) logoEl.innerHTML = 'λ';
+      if (subTitleEl) subTitleEl.innerHTML = 'IDE Funcional <span class="logo-author-tag">by Nhyix</span>';
+      if (btnRun) btnRun.innerHTML = '<i class="fa-solid fa-play"></i> <span>Ejecutar</span>';
+      if (engineStatus) engineStatus.innerHTML = '<i class="fa-solid fa-circle-nodes text-green"></i> Motor Listo';
+      if (tabOut) tabOut.innerHTML = '<i class="fa-solid fa-terminal"></i> <span>Salida / Consola</span>';
+      if (tabRepl) tabRepl.innerHTML = '<i class="fa-solid fa-comment-dots"></i> <span>REPL Interactivo</span>';
+      if (tabTrace) tabTrace.innerHTML = '<i class="fa-solid fa-route"></i> <span>Reducciones (Traza)</span>';
+      const lang = activeTab ? activeTab.language : 'hope';
+      if (replPrompt) replPrompt.textContent = `λ (${lang})> `;
+      if (ambientEl) ambientEl.style.display = 'none';
+    }
+
+    const sel = document.getElementById('theme-select');
+    if (sel && sel.value !== theme) sel.value = theme;
+    try { localStorage.setItem('trifunc_active_theme', theme); } catch (e) {}
+  }
+  window.applyTheme = applyTheme;
+
+  function unlockSecretThemes() {
+    const sel = document.getElementById('theme-select');
+    if (sel && !document.getElementById('opt-theme-madoka')) {
+      const optGroup = document.createElement('optgroup');
+      optGroup.label = '✦ Edición Anime (Desbloqueados)';
+      optGroup.id = 'opt-group-secret';
+
+      const optMadoka = document.createElement('option');
+      optMadoka.id = 'opt-theme-madoka';
+      optMadoka.value = 'madoka';
+      optMadoka.textContent = '🌸 Madoka Magica (Soul Gem)';
+      optGroup.appendChild(optMadoka);
+
+      const optAccel = document.createElement('option');
+      optAccel.id = 'opt-theme-accel';
+      optAccel.value = 'accel-world';
+      optAccel.textContent = '⚡ Accel World (Burst Link)';
+      optGroup.appendChild(optAccel);
+
+      const optGhoul = document.createElement('option');
+      optGhoul.id = 'opt-theme-ghoul';
+      optGhoul.value = 'tokyo-ghoul';
+      optGhoul.textContent = '🩸 Tokyo Ghoul (Kakugan)';
+      optGroup.appendChild(optGhoul);
+
+      sel.appendChild(optGroup);
+    }
+    try {
+      localStorage.setItem('trifunc_secret_themes_unlocked', 'true');
+    } catch (e) {}
+  }
+  window.unlockSecretThemes = unlockSecretThemes;
+
+  // Theme switch listener
+  document.getElementById('theme-select').addEventListener('change', (e) => {
+    applyTheme(e.target.value);
   });
 
   // Language switch from Status Bar
@@ -371,11 +569,21 @@ function setupEventListeners() {
     if (e.target === modalHelp) modalHelp.style.display = 'none';
   });
 
-  // Easter Egg Modal (Protocol 7620859 // Nhyix Core)
+  // Secret Protocol 7620859 & Anime Themes Unlocker Modal
   const modalEasterEgg = document.getElementById('modal-easter-egg');
   const openEasterEgg = () => {
-    if (modalEasterEgg) modalEasterEgg.style.display = 'flex';
-    showToast('⚡ Protocolo 7620859 Activado — Nhyix Core', 'success');
+    unlockSecretThemes();
+    if (modalEasterEgg) {
+      modalEasterEgg.style.display = 'flex';
+      document.querySelectorAll('.secret-theme-card').forEach(card => {
+        const theme = card.getAttribute('data-theme-apply');
+        const iconEl = card.querySelector('.st-icon');
+        if (iconEl && _SYS_GFX_CACHE[theme]) {
+          iconEl.innerHTML = `<img src="${_SYS_GFX_CACHE[theme].logo}" class="st-icon-preview" alt="glyph" />`;
+        }
+      });
+    }
+    showToast('✨ ¡3 Temas Secretos Desbloqueados: Madoka Magica, Accel World y Tokyo Ghoul!', 'success');
   };
   const closeEasterEgg = () => {
     if (modalEasterEgg) modalEasterEgg.style.display = 'none';
@@ -392,23 +600,36 @@ function setupEventListeners() {
     });
   }
 
-  // Footer Author Badge click triggers Easter Egg
-  const sbAuthorBadge = document.getElementById('sb-author-badge');
-  if (sbAuthorBadge) sbAuthorBadge.addEventListener('click', openEasterEgg);
+  // Wire up secret theme card click-to-apply buttons
+  document.querySelectorAll('[data-theme-btn]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const theme = btn.getAttribute('data-theme-btn');
+      applyTheme(theme);
+      showToast(`Tema activado: ${theme}`, 'success');
+      closeEasterEgg();
+    });
+  });
+  document.querySelectorAll('.secret-theme-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const theme = card.getAttribute('data-theme-apply');
+      if (theme) {
+        applyTheme(theme);
+        showToast(`Tema activado: ${theme}`, 'success');
+        closeEasterEgg();
+      }
+    });
+  });
 
-  // Triple-click logo triggers Easter Egg
-  let logoClicks = 0;
-  let logoTimer = null;
-  const logoBtn = document.getElementById('logo-icon-btn');
-  if (logoBtn) {
-    logoBtn.addEventListener('click', () => {
-      logoClicks++;
-      clearTimeout(logoTimer);
-      if (logoClicks >= 3) {
-        logoClicks = 0;
+  // Footer Author Badge click triggers Easter Egg ONLY if code was entered in console
+  const sbAuthorBadge = document.getElementById('sb-author-badge');
+  if (sbAuthorBadge) {
+    sbAuthorBadge.addEventListener('click', () => {
+      const codeWasEntered = localStorage.getItem('trifunc_console_code_entered') === 'true';
+      if (codeWasEntered) {
         openEasterEgg();
       } else {
-        logoTimer = setTimeout(() => { logoClicks = 0; }, 1000);
+        showToast('TriFunc Studio v2.0 • Diseñado por Nhyix');
       }
     });
   }
@@ -1365,16 +1586,19 @@ async function handleReplKey(e) {
     }
 
     if (expr === '7620859' || expr === ':7620859' || expr.toLowerCase() === 'nhyix') {
+      try { localStorage.setItem('trifunc_console_code_entered', 'true'); } catch (e) {}
       if (window.triggerEasterEgg) window.triggerEasterEgg();
       historyBox.innerHTML += `<div class="output-easter-egg">
 ╔══════════════════════════════════════════════════════════════════╗
-║           ★ PROTOCOLO 7620859 // NHYIX CORE ONLINE ★             ║
+║           ★ PROTOCOLO 7620859 // SISTEMA NHYIX ACTIVADO ★        ║
 ║  "La computación funcional no es una técnica, es una forma       ║
 ║   de pensamiento puro."                                          ║
 ║                                                                  ║
 ║  • Creador & Arquitecto: Nhyix                                   ║
-║  • ID Verificación: #7620859-NHYIX-LAMBDA                        ║
-║  • Estado del Núcleo: Pureza Absoluta (Haskell · Scheme · Hope)  ║
+║  • 3 Temas Secretos Habilitados en el Selector:                  ║
+║    [1] 🌸 Mahou Shoujo Madoka Magica (Soul Gem)                  ║
+║    [2] ⚡ Accel World (Burst Link)                               ║
+║    [3] 🩸 Tokyo Ghoul (Kakugan)                                  ║
 ╚══════════════════════════════════════════════════════════════════╝</div>`;
       historyBox.scrollTop = historyBox.scrollHeight;
       return;

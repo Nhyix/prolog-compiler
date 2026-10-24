@@ -1,0 +1,20 @@
+type producto == num # num;      
+
+dec subtotal : list(producto) -> num;
+--- subtotal nil <= 0;
+--- subtotal ((p, c) :: resto) <= p * c + subtotal resto;
+
+dec descuento : num -> num;
+--- descuento t <= if t > 500 then t * 0.9 else t;
+
+dec iva : num -> num;
+--- iva t <= t * 1.16;
+
+dec componer : list(alpha -> alpha) -> alpha -> alpha;
+--- componer nil x <= x;
+--- componer (f :: fs) x <= componer fs (f x);
+
+dec total : list(producto) -> num;
+--- total c <= componer (descuento :: iva :: nil) (subtotal c);
+
+total ((120,2) :: (80,3) :: (200,1) :: nil);   

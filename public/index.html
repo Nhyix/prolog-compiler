@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TriFunc Studio — IDE Funcional (Haskell · Scheme · Hope)</title>
+  <!-- Local 100% Offline Styles & FontAwesome -->
+  <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="logo-area">
+      <div class="logo-icon" id="logo-icon-btn" title="TriFunc Studio — Creado por Nhyix (3 clics para Easter Egg)">λ</div>
+      <div class="logo-title-group">
+        <span class="logo-title">TriFunc Studio</span>
+        <span class="logo-subtitle">IDE Funcional <span class="logo-author-tag">by Nhyix</span></span>
+      </div>
+      <div id="active-lang-badge" class="lang-badge lang-hop" title="Lenguaje activo">Hope</div>
+      <div id="auto-detect-pill" class="auto-detect-pill" title="Detección Automática Inteligente activada">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="auto-detect-text">Auto: Hope (99%)</span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="btn-run" class="btn btn-primary" title="Ejecutar Código Activo (Ctrl+Enter)">
+        <i class="fa-solid fa-play"></i> <span>Ejecutar</span>
+      </button>
+
+      <button id="btn-format" class="btn btn-secondary" title="Corregir Sangría y Formatear Código (Shift+Alt+F)">
+        <i class="fa-solid fa-align-left"></i> <span>Formatear</span>
+      </button>
+
+      <button id="btn-save" class="btn" title="Guardar Cambios (Ctrl+S)">
+        <i class="fa-solid fa-floppy-disk"></i> <span>Guardar</span>
+      </button>
+
+      <button id="btn-new-file" class="btn" title="Nuevo Archivo de Código">
+        <i class="fa-solid fa-plus"></i> <span>Nuevo</span>
+      </button>
+
+      <!-- Template snippet inserter -->
+      <div class="dropdown-wrapper">
+        <button id="btn-snippets" class="btn" title="Insertar Algoritmo o Plantilla">
+          <i class="fa-solid fa-code"></i> <span>Plantillas</span> <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div id="snippets-dropdown" class="dropdown-menu">
+          <div class="dropdown-header">Algoritmos Funcionales</div>
+          <button class="dropdown-item" data-snippet="factorial"><i class="fa-solid fa-calculator"></i> Factorial Recursivo</button>
+          <button class="dropdown-item" data-snippet="fibonacci"><i class="fa-solid fa-chart-line"></i> Secuencia Fibonacci</button>
+          <button class="dropdown-item" data-snippet="quicksort"><i class="fa-solid fa-arrow-down-short-wide"></i> Quicksort Funcional</button>
+          <button class="dropdown-item" data-snippet="tree"><i class="fa-solid fa-sitemap"></i> Árbol Binario (ADT)</button>
+          <button class="dropdown-item" data-snippet="closure"><i class="fa-solid fa-box-archive"></i> Clausura Léxica / HOF</button>
+          <button class="dropdown-item" data-snippet="graphics"><i class="fa-solid fa-palette"></i> Gráficos y Ventana (Visual)</button>
+        </div>
+      </div>
+
+      <!-- Font Size & Color Configuration Dropdown -->
+      <div class="dropdown-wrapper">
+        <button id="btn-font-settings" class="btn" title="Configurar Tamaño y Color de la Fuente">
+          <i class="fa-solid fa-font"></i> <span>Fuente</span> <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+        </button>
+        <div id="font-settings-dropdown" class="dropdown-menu font-config-menu">
+          <div class="dropdown-header"><i class="fa-solid fa-sliders"></i> Tamaño y Color de Fuente</div>
+          
+          <div class="font-config-section">
+            <div class="font-config-label">
+              <span>Tamaño de letra</span>
+              <span id="font-size-label" class="font-size-badge">14px</span>
+            </div>
+            <div class="font-size-controls">
+              <button id="btn-font-dec" class="btn btn-sm" title="Disminuir tamaño">A-</button>
+              <input id="font-size-slider" type="range" min="10" max="28" step="1" value="14" />
+              <button id="btn-font-inc" class="btn btn-sm" title="Aumentar tamaño">A+</button>
+            </div>
+          </div>
+
+          <div class="font-config-section">
+            <div class="font-config-label">
+              <span>Color de fuente</span>
+              <span id="font-color-hex" class="font-size-badge">Tema</span>
+            </div>
+            <div class="font-color-row">
+              <input id="font-color-picker" type="color" value="#cdd6f4" title="Elegir color personalizado" />
+              <div class="color-swatches">
+                <button class="color-swatch" data-color="#ffffff" style="background:#ffffff;" title="Blanco Puro"></button>
+                <button class="color-swatch" data-color="#00ff9d" style="background:#00ff9d;" title="Verde Terminal"></button>
+                <button class="color-swatch" data-color="#36f9f6" style="background:#36f9f6;" title="Cian Neón"></button>
+                <button class="color-swatch" data-color="#fede5d" style="background:#fede5d;" title="Ámbar Dorado"></button>
+                <button class="color-swatch" data-color="#cba6f7" style="background:#cba6f7;" title="Violeta"></button>
+                <button class="color-swatch" data-color="#ff7edb" style="background:#ff7edb;" title="Rosa Neón"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="font-config-actions">
+            <button id="btn-font-reset" class="btn btn-sm btn-full">
+              <i class="fa-solid fa-rotate-left"></i> Restablecer por defecto
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme select -->
+      <select id="theme-select" class="theme-select" title="Seleccionar Tema Visual">
+        <option value="dark">Tema Oscuro (VS Modern)</option>
+        <option value="synthwave">Synthwave '84 (Neon Cyber)</option>
+        <option value="monokai">Monokai Pro</option>
+        <option value="github-dark">GitHub Dark</option>
+        <option value="light">Tema Claro (Light)</option>
+      </select>
+
+      <!-- Help modal trigger -->
+      <button id="btn-help-modal" class="btn btn-icon-only" title="Atajos de Teclado y Ayuda">
+        <i class="fa-solid fa-circle-question"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-tabs">
+        <button id="tab-btn-files" class="sidebar-tab-btn active" title="Explorador de Archivos">
+          <i class="fa-solid fa-folder-tree"></i> <span>Archivos</span>
+        </button>
+        <button id="tab-btn-examples" class="sidebar-tab-btn" title="Colección de Ejemplos">
+          <i class="fa-solid fa-book-bookmark"></i> <span>Ejemplos</span>
+        </button>
+        <button id="tab-btn-docs" class="sidebar-tab-btn" title="Manual de Lenguajes">
+          <i class="fa-solid fa-graduation-cap"></i> <span>Manual</span>
+        </button>
+      </div>
+
+      <div class="sidebar-content">
+        <!-- Files Explorer Section -->
+        <div id="section-files">
+          <div class="section-header">
+            <span class="section-title"><i class="fa-solid fa-folder-open"></i> Workspace</span>
+            <div class="section-header-actions">
+              <button id="btn-sidebar-new" class="icon-btn" title="Crear archivo"><i class="fa-solid fa-plus"></i></button>
+              <button id="btn-refresh-files" class="icon-btn" title="Recargar archivos"><i class="fa-solid fa-rotate-right"></i></button>
+            </div>
+          </div>
+          <ul id="workspace-file-list" class="file-list">
+            <!-- Dynamic files populated by app.js -->
+          </ul>
+        </div>
+
+        <!-- Examples Section -->
+        <div id="section-examples" style="display: none;">
+          <div class="examples-search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input id="examples-search-input" type="text" placeholder="Filtrar ejemplos..." />
+          </div>
+          <div class="example-category">
+            <h4><i class="fa-solid fa-cube text-hs"></i> Haskell</h4>
+            <div id="examples-haskell"></div>
+          </div>
+          <div class="example-category">
+            <h4><i class="fa-solid fa-brackets-curly text-scm"></i> Scheme (R7RS)</h4>
+            <div id="examples-scheme"></div>
+          </div>
+          <div class="example-category">
+            <h4><i class="fa-solid fa-wand-magic-sparkles text-hop"></i> Hope (1980)</h4>
+            <div id="examples-hope"></div>
+          </div>
+        </div>
+
+        <!-- Docs / Cheatsheet Section -->
+        <div id="section-docs" style="display: none;">
+          <div class="docs-box docs-hope">
+            <div class="docs-box-header">
+              <h4>Hope (1978/1980)</h4>
+            </div>
+            <p>Ecuaciones con pattern matching y tipos algebraicos de datos:</p>
+            <pre><code>dec fact : num -> num;
+--- fact 0 <= 1;
+--- fact n <= n * fact(n - 1);
+
+data tree alpha == emptytree 
+  ++ node(alpha # tree alpha # tree alpha);</code></pre>
+          </div>
+
+          <div class="docs-box docs-scheme">
+            <div class="docs-box-header">
+              <h4>Scheme (R7RS)</h4>
+            </div>
+            <p>S-expresiones, clausuras léxicas y listas:</p>
+            <pre><code>(define (fib n)
+  (if (< n 2) n
+      (+ (fib (- n 1)) (fib (- n 2)))))
+
+(map (lambda (x) (* x 2)) '(1 2 3))</code></pre>
+          </div>
+
+          <div class="docs-box docs-haskell">
+            <div class="docs-box-header">
+              <h4>Haskell</h4>
+            </div>
+            <p>Pattern matching, guardas y comprensión de listas:</p>
+            <pre><code>qsort [] = []
+qsort (x:xs) = 
+  qsort [y | y <- xs, y <= x]
+  ++ [x] ++
+  qsort [y | y <- xs, y > x]</code></pre>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center Workspace / Editor Area -->
+    <main class="workspace-area">
+      <!-- Tabs Bar -->
+      <div id="tabs-bar" class="tabs-bar">
+        <!-- Editor tabs rendered dynamically -->
+      </div>
+
+      <!-- Breadcrumbs Bar -->
+      <div class="breadcrumbs-bar">
+        <div class="breadcrumb-path">
+          <i class="fa-solid fa-folder-tree breadcrumb-icon"></i>
+          <span id="breadcrumb-workspace">workspace</span>
+          <span class="breadcrumb-separator">/</span>
+          <span id="breadcrumb-filename">main.hop</span>
+        </div>
+        <div class="breadcrumb-meta">
+          <span id="breadcrumb-lang-detected" class="badge-lang-indicator">Hope</span>
+        </div>
+      </div>
+
+      <!-- Live Editor Alert Banner for Typos & Syntax Warnings -->
+      <div id="editor-alert-banner" class="editor-alert-banner" style="display: none;">
+        <div class="alert-banner-left">
+          <i class="fa-solid fa-triangle-exclamation alert-banner-icon"></i>
+          <span id="alert-banner-text">Se detectó un error de escritura</span>
+        </div>
+        <div class="alert-banner-actions">
+          <button id="btn-alert-quickfix" class="btn-alert-fix" style="display: none;">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> <span id="alert-quickfix-label">Corregir</span>
+          </button>
+          <button id="btn-alert-goto" class="btn-alert-secondary">Ir a línea</button>
+          <button id="btn-alert-all" class="btn-alert-secondary">Ver diagnósticos</button>
+        </div>
+      </div>
+
+      <!-- Monaco Editor Holder -->
+      <div class="editor-container">
+        <div id="monaco-editor"></div>
+      </div>
+
+      <!-- Resizer Splitter -->
+      <div id="panel-resizer" class="panel-resizer" title="Arrastra para ajustar el tamaño del panel inferior"></div>
+
+      <!-- Bottom Panel (Console / REPL / Trace / Canvas / Linter) -->
+      <div id="bottom-panel" class="bottom-panel">
+        <div class="panel-header">
+          <div class="panel-tabs">
+            <button id="ptab-output" class="panel-tab active" title="Salida y resultados de ejecución">
+              <i class="fa-solid fa-terminal"></i> <span>Salida / Consola</span>
+            </button>
+            <button id="ptab-repl" class="panel-tab" title="Consola interactiva de evaluación (Read-Eval-Print Loop)">
+              <i class="fa-solid fa-comment-dots"></i> <span>REPL Interactivo</span>
+            </button>
+            <button id="ptab-trace" class="panel-tab" title="Traza paso a paso de reducciones funcionales">
+              <i class="fa-solid fa-route"></i> <span>Reducciones (Traza)</span>
+            </button>
+            <button id="ptab-canvas" class="panel-tab" title="Lienzo Gráfico 2D y Visor de Imágenes">
+              <i class="fa-solid fa-palette"></i> <span>Lienzo Gráfico</span>
+            </button>
+            <button id="ptab-diagnostics" class="panel-tab" title="Errores de escritura y advertencias de sintaxis">
+              <i class="fa-solid fa-triangle-exclamation"></i> <span>Diagnósticos</span>
+              <span id="diag-badge" class="count-pill">0</span>
+            </button>
+          </div>
+          <div class="panel-controls">
+            <span id="duration-badge" class="duration-tag" style="display:none;"><i class="fa-regular fa-clock"></i> 0 ms</span>
+            <button id="btn-copy-output" class="icon-btn-text" title="Copiar salida al portapapeles"><i class="fa-regular fa-copy"></i> Copiar</button>
+            <button id="btn-clear-console" class="icon-btn-text" title="Limpiar"><i class="fa-solid fa-ban"></i> Limpiar</button>
+          </div>
+        </div>
+
+        <div class="panel-body">
+          <!-- Console Output View -->
+          <div id="view-output" class="console-output">
+            <span style="color: var(--text-muted)">Bienvenido a <strong>TriFunc Studio</strong>. Selecciona o crea un archivo y presiona <kbd>Ejecutar</kbd> o <kbd>Ctrl+Enter</kbd>.</span>
+          </div>
+
+          <!-- REPL Interactive View -->
+          <div id="view-repl" class="repl-container" style="display: none;">
+            <div id="repl-history" class="repl-history"></div>
+            <div class="repl-input-row">
+              <span id="repl-prompt" class="repl-prompt">λ (hop)></span>
+              <input id="repl-input" class="repl-input" type="text" placeholder="Escribe una expresión y presiona Enter... (:clear para limpiar)" />
+            </div>
+          </div>
+
+          <!-- Functional Step Trace View -->
+          <div id="view-trace" style="display: none;">
+            <div id="trace-container">
+              <span style="color: var(--text-muted)">Las llamadas y pasos de reducción funcional (Hope, Scheme y Haskell) se mostrarán aquí tras ejecutar.</span>
+            </div>
+          </div>
+
+          <!-- Graphics Canvas & Image Viewer -->
+          <div id="view-canvas" class="canvas-view-container" style="display: none;">
+            <div class="canvas-toolbar">
+              <span><i class="fa-solid fa-paintbrush"></i> Salida Gráfica 2D / Imágenes</span>
+              <div class="canvas-toolbar-actions">
+                <button id="btn-open-floating-window" class="btn btn-sm" title="Abrir lienzo en una ventana emergente grande">
+                  <i class="fa-solid fa-up-right-from-square"></i> Abrir en Ventana Emergente
+                </button>
+              </div>
+            </div>
+            <div class="canvas-stage">
+              <canvas id="graphics-canvas" width="680" height="220"></canvas>
+              <div id="graphics-images" class="graphics-images"></div>
+            </div>
+          </div>
+
+          <!-- Diagnostics & Linter View -->
+          <div id="view-diagnostics" style="display: none;">
+            <div id="diagnostics-container">
+              <div class="diagnostics-empty"><i class="fa-solid fa-circle-check text-green"></i> No se encontraron errores de sintaxis ni de escritura en el archivo actual.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Bottom Status Bar -->
+  <footer class="status-bar">
+    <div class="status-left">
+      <span id="sb-cursor-pos" class="status-item"><i class="fa-regular fa-compass"></i> Ln 1, Col 1</span>
+      <span id="sb-encoding" class="status-item">UTF-8</span>
+      <span id="sb-indent" class="status-item">Espacios: 2</span>
+      <span id="sb-linter-status" class="status-item status-ok"><i class="fa-solid fa-circle-check"></i> 0 errores</span>
+    </div>
+    <div class="status-right">
+      <button id="sb-autodetect-toggle" class="status-item status-btn active" title="Alternar Detección Automática de Lenguaje">
+        <i class="fa-solid fa-bolt"></i> Auto-detect: ON
+      </button>
+      <select id="sb-lang-select" class="status-lang-select" title="Cambiar lenguaje del archivo actual">
+        <option value="hope">Hope (.hop)</option>
+        <option value="scheme">Scheme (.scm)</option>
+        <option value="haskell">Haskell (.hs)</option>
+      </select>
+      <span id="sb-author-badge" class="status-item status-author-item" title="Autor & Arquitecto: Nhyix (Clic para Easter Egg #7620859)">
+        <i class="fa-solid fa-fingerprint text-purple"></i> by Nhyix
+      </span>
+      <span id="sb-engine-status" class="status-item"><i class="fa-solid fa-circle-nodes text-green"></i> Motor Listo</span>
+      <span class="status-item status-offline" title="Todo el IDE, Monaco y los motores corren 100% de manera local y desconectada"><i class="fa-solid fa-shield-halved"></i> 100% Offline</span>
+    </div>
+  </footer>
+
+  <!-- New File Modal -->
+  <div id="modal-new-file" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-title"><i class="fa-solid fa-file-circle-plus"></i> Crear Nuevo Archivo</div>
+      <p class="modal-subtitle">Escribe el nombre con extensión (<code>.hop</code>, <code>.scm</code> o <code>.hs</code>):</p>
+      <input id="new-file-name" class="modal-input" type="text" placeholder="ejemplo: algoritmo.hop, pruebas.scm, demo.hs" />
+      <div class="modal-actions">
+        <button id="btn-cancel-modal" class="btn">Cancelar</button>
+        <button id="btn-confirm-modal" class="btn btn-primary">Crear Archivo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Program GUI Window Modal (msgbox / Floating Canvas Window) -->
+  <div id="modal-program-window" class="modal-overlay">
+    <div class="modal-content modal-large program-window-card">
+      <div class="program-window-header">
+        <div class="modal-title" id="program-window-title"><i class="fa-solid fa-window-restore"></i> Ventana de Ejecución</div>
+        <button id="btn-close-program-window" class="btn btn-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="program-window-body" class="program-window-body"></div>
+      <div id="program-window-canvas-wrap" class="program-window-canvas-wrap" style="display: none;">
+        <canvas id="floating-graphics-canvas" width="680" height="340"></canvas>
+      </div>
+      <div class="modal-actions">
+        <button id="btn-ok-program-window" class="btn btn-primary">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help & Shortcuts Modal -->
+  <div id="modal-help" class="modal-overlay">
+    <div class="modal-content modal-large">
+      <div class="modal-title"><i class="fa-solid fa-keyboard"></i> Atajos de Teclado y Ayuda</div>
+      
+      <div class="author-credits-card">
+        <div class="credits-badge"><i class="fa-solid fa-crown text-amber"></i> Creado y Desarrollado por <strong>Nhyix</strong></div>
+        <p class="credits-text">TriFunc Studio IDE &bull; Entorno 100% Offline para Haskell, Scheme y Hope.</p>
+        <div class="credits-meta">ID de Arquitectura: <code>#7620859-NHYIX-CORE</code> &bull; Versión 2.0.0-pure</div>
+      </div>
+
+      <div class="shortcuts-grid">
+        <div class="shortcut-row">
+          <kbd>Ctrl</kbd> + <kbd>Enter</kbd>
+          <span>Ejecutar el código del archivo activo</span>
+        </div>
+        <div class="shortcut-row">
+          <kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd>
+          <span>Formatear código y corregir sangría automáticamente</span>
+        </div>
+        <div class="shortcut-row">
+          <kbd>Ctrl</kbd> + <kbd>S</kbd>
+          <span>Guardar cambios en el archivo activo</span>
+        </div>
+        <div class="shortcut-row">
+          <code>msgbox / draw-circle / draw-line / show-image</code>
+          <span>Desplegar ventanas emergentes, dibujos 2D e imágenes</span>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="btn-close-help" class="btn btn-primary">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Easter Egg Modal: Protocol 7620859 (Nhyix Core) -->
+  <div id="modal-easter-egg" class="modal-overlay">
+    <div class="modal-content modal-easter-egg">
+      <div class="easter-egg-header">
+        <div class="easter-egg-title"><i class="fa-solid fa-terminal text-cyan"></i> PROTOCOLO 7620859 // ACCESO CONCEDIDO</div>
+        <button id="btn-close-easter-egg" class="btn btn-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="easter-egg-body">
+        <div class="easter-egg-cyber-badge"><i class="fa-solid fa-shield-halved"></i> NHYIX CORE ONLINE</div>
+        <h2 class="easter-egg-code-display">7620859</h2>
+        <p class="easter-egg-quote">&ldquo;La computación funcional no es una técnica de programación, es una forma de pensamiento puro.&rdquo;</p>
+        <div class="easter-egg-spec-grid">
+          <div class="spec-item"><i class="fa-solid fa-fingerprint text-purple"></i> <span>Autor:</span> <strong>Nhyix</strong></div>
+          <div class="spec-item"><i class="fa-solid fa-shield-halved text-cyan"></i> <span>ID Secreto:</span> <strong>#7620859</strong></div>
+          <div class="spec-item"><i class="fa-solid fa-microchip text-green"></i> <span>Kernel:</span> <strong>TriFunc v2.0 Pure</strong></div>
+          <div class="spec-item"><i class="fa-solid fa-bolt text-amber"></i> <span>Estado:</span> <strong>100% Offline & Operativo</strong></div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button id="btn-confirm-easter-egg" class="btn btn-primary"><i class="fa-solid fa-check"></i> Reconocido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rich Toast / Alert Container -->
+  <div id="toast-notification" class="toast-notification"></div>
+
+  <!-- 100% Local Offline Monaco Editor loader & dependencies -->
+  <script src="/vendor/monaco/vs/loader.js"></script>
+  <script src="monaco-languages.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

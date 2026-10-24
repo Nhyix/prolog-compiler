@@ -1,0 +1,31 @@
+{
+  "name": "trifunc-studio",
+  "version": "2.0.0",
+  "description": "Entorno de desarrollo integrado (IDE) 100% offline para programación funcional pura en Haskell, Scheme y Hope con linter en tiempo real, REPL interactivo y reducciones paso a paso.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "functional-programming",
+    "haskell",
+    "scheme",
+    "hope",
+    "ide",
+    "offline",
+    "compiler",
+    "interpreter",
+    "monaco-editor",
+    "nhyix"
+  ],
+  "author": "Nhyix",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^7.3.1",
+    "biwascheme": "^0.8.3",
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "monaco-editor": "^0.57.0"
+  }
+}

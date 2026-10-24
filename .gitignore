@@ -1,0 +1,22 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Archivos de depuración y logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Entornos y temporales de editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.bak
+*~
+
+# Directorio de datos temporales
+tmp/
+.cache/

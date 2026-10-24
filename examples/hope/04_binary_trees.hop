@@ -1,0 +1,15 @@
+! ===================================================
+! Hope Example 4: Algebraic Data Types & Binary Trees
+! ===================================================
+
+data tree alpha == emptytree ++ node(alpha # tree alpha # tree alpha);
+
+dec sumtree : tree num -> num;
+--- sumtree emptytree <= 0;
+--- sumtree (node(v, l, r)) <= v + sumtree l + sumtree r;
+
+dec countnodes : tree alpha -> num;
+--- countnodes emptytree <= 0;
+--- countnodes (node(v, l, r)) <= 1 + countnodes l + countnodes r;
+
+sumtree(node(50, node(25, emptytree, emptytree), node(75, emptytree, emptytree)));

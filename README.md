@@ -6,14 +6,14 @@
 ![Author](https://img.shields.io/badge/Author-Nhyix-8a2be2.svg?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/100%25-Offline_Resilient-success.svg?style=for-the-badge)
 ![Languages](https://img.shields.io/badge/Languages-Haskell_%7C_Scheme_%7C_Hope-informational.svg?style=for-the-badge)
-![Core](https://img.shields.io/badge/Core_ID-%237620859--NHYIX-ff69b4.svg?style=for-the-badge)
+![Core](https://img.shields.io/badge/Core_ID-%23'NHYIX-ff69b4.svg?style=for-the-badge)
 
 <p align="center">
   <b>Un entorno de desarrollo integrado (IDE) profesional, moderno y 100% desconectado, diseñado específicamente para la programación funcional pura en Haskell, Scheme y Hope.</b>
 </p>
 
 <p align="center">
-  Desarrollado y Diseñado por <b>Nhyix</b> &bull; Código de Verificación de Arquitectura: <code>#7620859-NHYIX-CORE</code>
+  Desarrollado y Diseñado por <b>Nhyix</b> &bull; 
 </p>
 
 </div>
@@ -106,7 +106,7 @@ flowchart TD
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/Compilator.git
+   git clone https://github.com/Nhyix/prolog-compiler.git
    cd Compilator
    ```
 
@@ -183,21 +183,10 @@ Compilator/
 
 ---
 
-## 🔮 Easter Egg: Protocolo Secreto 7620859 (Nhyix Core)
-
-Este IDE cuenta con un módulo oculto de verificación de integridad y autoría denominado **Protocolo 7620859**:
-
-* **Método 1 (REPL):** Abre la pestaña **REPL Interactivo**, escribe `7620859` (o `nhyix`) y presiona <kbd>Enter</kbd>.
-* **Método 2 (Header):** Haz clic 3 veces consecutivas sobre el icono de Lambda `λ` en la esquina superior izquierda.
-* **Método 3 (Footer):** Haz un clic directo sobre la etiqueta de autoría `by Nhyix` en la barra de estado inferior.
-* **Método 4 (Código Fuente):** Si ejecutas un programa que contenga el número `7620859`, la consola desplegará una insignia holográfica de autenticación funcional.
-
----
 
 ## 📄 Licencia y Reconocimientos
 
 Este proyecto está bajo la Licencia **MIT**. Consulta el archivo `package.json` para más detalles.
 
 * **Creador & Arquitecto:** **Nhyix**
-* **ID de Verificación:** `#7620859-NHYIX-CORE`
 * **Tecnologías Base:** [Node.js](https://nodejs.org/), [Express](https://expressjs.com/), [Monaco Editor](https://microsoft.github.io/monaco-editor/), [BiwaScheme](https://www.biwascheme.org/), [FontAwesome](https://fontawesome.com/).
